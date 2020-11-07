@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 networks:
   laravel:
@@ -15,24 +15,6 @@ services:
       - ./src:/var/www/html:delegated
     depends_on:
       - php
-      - mysql
-    networks:
-      - laravel
-
-  mysql:
-    image: mysql:5.7.29
-    container_name: mysql
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: homestead
-      MYSQL_USER: homestead
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
     networks:
       - laravel
 
@@ -61,7 +43,7 @@ services:
     user: laravel
     networks:
       - laravel
-    entrypoint: ['composer', '--ignore-platform-reqs']
+    entrypoint: ["composer", "--ignore-platform-reqs"]
 
   npm:
     image: node:13.7
@@ -69,7 +51,7 @@ services:
     volumes:
       - ./src:/var/www/html
     working_dir: /var/www/html
-    entrypoint: ['npm']
+    entrypoint: ["npm"]
 
   artisan:
     build:
@@ -78,10 +60,8 @@ services:
     container_name: artisan
     volumes:
       - ./src:/var/www/html:delegated
-    depends_on:
-      - mysql
     working_dir: /var/www/html
     user: laravel
-    entrypoint: ['php', '/var/www/html/artisan']
+    entrypoint: ["php", "/var/www/html/artisan"]
     networks:
       - laravel
